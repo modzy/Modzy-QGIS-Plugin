@@ -1,0 +1,34 @@
+[general]
+name=Modzy
+qgisMinimumVersion=3.8
+description=Access to Modzy's ML, DL and AI models
+version=0.2
+author=Modzy
+email=support@modzy.com
+
+about=Modzy hosts a marketplace of ML, AI algorithms for use.
+
+#tracker=http://bugs
+#repository=http://repo
+
+
+# Optional items:
+
+hasProcessingProvider=yes
+# changelog=
+
+
+tags=python,AI,ML,Modzy,modelops
+homepage=https://www.modzy.com/
+category=Analysis
+icon=icon.png
+
+# experimental flag
+experimental=True
+
+# deprecated flag (applies to the whole plugin, not just a single version)
+deprecated=False
+
+# If the plugin can run on QGIS Server.
+server=False
+
