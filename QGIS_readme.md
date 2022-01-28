@@ -16,14 +16,6 @@ QGIS Integration
 	- Basic Authentication
 	- Username: Modzy
 	- Password: your key
-```
-from modzy import ApiClient
-API_URL = "https://app.modzy.com/api/"
-API_KEY = "BhNiUmfhugTHhc0L4IyQ.fSzFF7ImdNxynoZGIKcP"
-client = ApiClient(base_url=API_URL, api_key=API_KEY)
-```
-
-
 
 
 
