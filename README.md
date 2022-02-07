@@ -2,12 +2,15 @@ To see more documentation, please [view this page on Modzy's official documentat
 
 # Overview
 
-Quantum GIS (QGIS) is an open-source Geographic Information System that supports viewing, editing, and analysis of geospatial data. Modzy integrates with QGIS to bring AI power to geospatial analysis. Modzy integrates seamlessly into your QGIS dashboard, bringing rapid and trusted AI insights to your fingertips
+[Quantum GIS (QGIS)](https://qgis.org)is an open-source [Geographic Information System](https://en.wikipedia.org/wiki/Geographic_information_system) for viewing, editing, and analyzing geospatial data. This plugin allows AI models managed by Modzy to be used seamlessly within QGIS for geospatial analysis from counting cars in satellite imagery to quantifying damage to buildings and communities, to automatically aligning and registering aerial imagery. 
 
+[![Modzy In Action](hhttps://files.readme.io/1a9ebd1-Screen_Shot_2021-07-30_at_8.13.07_AM.png)](https://docs.modzy.com/docs/qgis)
 
 # Integration in Action
 
 With AI power in QGIS, Modzy’s Vehicle Detection model quickly identifies every vehicle in the video. For a human reviewing hundreds of images per day, this is a daunting task—particularly when the images frequently change as vehicles move. Automating vehicle detection with Modzy speeds up this process, while ensuring consistency and accuracy every time.
+
+[![Modzy In Action](https://img.youtube.com/vi/0CjHcPwdA0w/0.jpg)](https://www.youtube.com/watch?v=0CjHcPwdA0w)
 
 # Installation 
 
