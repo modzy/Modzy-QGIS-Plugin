@@ -250,12 +250,8 @@ class GeneralObjectDetectionAlgorithm(QgsProcessingAlgorithm):
 			object_feat = QgsFeature(object_layer.fields())
 			bounding_box = QgsGeometry.fromPolygonXY([[QgsPointXY(point[0], point[1]) for point in raw_points]])
 			object_feat.setGeometry(bounding_box)
-			try:
-				object_feat['className'] = gobject['className']
-				object_feat['probability'] = gobject['probability']
-			except Exception as E:
-				print('error adding features', E)
-				print(gobject)
+			object_feat['className'] = gobject['className']
+			object_feat['probability'] = gobject['probability']
 			object_dp.addFeatures([object_feat])
 		
 		object_layer.updateExtents()
