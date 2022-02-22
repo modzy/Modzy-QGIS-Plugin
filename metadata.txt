@@ -8,8 +8,8 @@ email=support@modzy.com
 
 about=Modzy hosts a marketplace of ML, AI algorithms for use.
 
-#tracker=http://bugs
-#repository=http://repo
+tracker=https://github.com/modzy/Modzy-QGIS-Plugin/issues
+repository=https://github.com/modzy/Modzy-QGIS-Plugin/
 
 
 # Optional items:
