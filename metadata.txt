@@ -16,9 +16,9 @@ about=
   - Mac OS X: In a terminal, execute: /Applications/QGIS.app/Contents/MacOS/bin/python3 -m pip install modzy-sdk
   - Windows: In a terminal, execute: C:\OSGeo4W\apps\Python39>pip install modzy-sdk+
   To see more documentation, please view this page on Modzy's official documentation site.
+
 tracker=https://github.com/modzy/Modzy-QGIS-Plugin/issues
 repository=https://github.com/modzy/Modzy-QGIS-Plugin/
-
 
 # Optional items:
 
@@ -27,7 +27,7 @@ hasProcessingProvider=yes
 
 
 tags=python,AI,ML,Modzy,modelops
-homepage=https://www.modzy.com/
+homepage=https://docs.modzy.com/docs/qgis
 category=Analysis
 icon=icon.png
 
