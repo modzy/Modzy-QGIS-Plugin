@@ -17,7 +17,7 @@ With AI power in QGIS, Modzy’s Vehicle Detection model quickly identifies ever
 - If you have not already, [install QGIS](https://qgis.org/en/site/forusers/download.html), including Python 3.9 and GDAL.
 - Install the Modzy SDK to QGIS. 
     - Mac OS X: In a terminal, execute: `/Applications/QGIS.app/Contents/MacOS/bin/python3 -m pip install modzy-sdk`
-    - Windows: 
+    - Windows: In a terminal, execute: `C:\OSGeo4W\apps\Python39>pip install modzy-sdk`
     - To verify the Modzy SDK is installed, within QGIS open a Python Console. Type `import modzy` and press enter. If there are no errors, it was successfully installed!
 - Install the Modzy Plugin:
     - Download the [zipped Modzy QGIS Plugin repository](https://github.com/modzy/Modzy-QGIS-Plugin/archive/refs/heads/main.zip).
