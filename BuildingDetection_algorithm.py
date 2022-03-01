@@ -7,11 +7,11 @@
 		copyright			 : (C) 2022 by Modzy
 		email				 : support@modzy.com
 
- Modzy’s Vehicle Detection model uses cutting-edge deep learning and image segmentation techniques to precisely locate and label objects in satellite imagery.
+ Modzy’s Building Detection model uses cutting-edge deep learning and image segmentation techniques to precisely locate and label objects in satellite imagery.
 """
 
 __author__ = 'Modzy'
-__date__ = '2022-01-01'
+__date__ = '2022-03-01'
 __copyright__ = '(C) 2022 by Modzy'
 
 __revision__ = '$Format:%H$'
@@ -50,9 +50,9 @@ from .modzy_login import get_client
 
 pluginPath = os.path.split(os.path.dirname(__file__))[0]
 
-class VehicleDetectionAlgorithm(QgsProcessingAlgorithm):
+class BuildingDetectionAlgorithm(QgsProcessingAlgorithm):
 	"""
-	Detect Vehicles
+	Detect Buildings
 	"""
 	OUTPUT = 'OUTPUT'
 	INPUT = 'INPUT'
@@ -102,9 +102,9 @@ class VehicleDetectionAlgorithm(QgsProcessingAlgorithm):
 			height = source.height()
 			mwidth = source.width()
 			
-			if height > 416 or mwidth > 416:
-				feedback.pushInfo('invalid image: image width and height must be less than or equal to 416px: {}, {}'.format(height, mwidth))
-				return {self.OUTPUT: "invalid image: image width and height must be less than or equal to 416px"}
+			if height > 300 or mwidth > 300:
+				feedback.pushInfo('invalid image: image width and height must be less than or equal to 300px: {}, {}'.format(height, mwidth))
+				return {self.OUTPUT: "invalid image: image width and height must be less than or equal to 300px"}
 				
 			mmetadata = source.htmlMetadata()
 			feedback.pushInfo('Input extents: {}'.format(extents))
@@ -115,7 +115,7 @@ class VehicleDetectionAlgorithm(QgsProcessingAlgorithm):
 			feedback.pushInfo('Starting inference, may take a few minutes...')
 			QgsMessageLog.logMessage("Processing...", "Modzy")
 
-			model_output = self.vehicle_detection(source.source())
+			model_output = self.building_detection(source.source())
 			
 			if model_output == None:
 				feedback.pushInfo("Error initializing Modzy Client, check authentication")
@@ -136,7 +136,7 @@ class VehicleDetectionAlgorithm(QgsProcessingAlgorithm):
 			feedback.pushInfo('Model run complete, drawing outlines...')
 			QgsMessageLog.logMessage("Rendering...", "Modzy")
 			outlines = self.plot_objects(model_output, source.source())
-			feedback.pushInfo('Recognized {} vehicles'.format(outlines))
+			feedback.pushInfo('Recognized {} buildings'.format(outlines))
 		except Exception as E:
 			feedback.pushInfo('Error getting outlines {}'.format(E))
 			QgsMessageLog.logMessage('Error building objects: '+str(E), "Modzy")
@@ -145,18 +145,18 @@ class VehicleDetectionAlgorithm(QgsProcessingAlgorithm):
 		return {'OUTPUT_COUNT': outlines}
 
 
-	def vehicle_detection(self, filePath):
+	def building_detection(self, filePath):
 		client = get_client()
 		if client == None:
 			return None
 
-		model_id = 'l5lhvcgzt4'
-		model_version = '0.0.1'
+		model_id = '07cda3cad0'
 		input_name = 'image'
 		model_info = client.models.get(model_id)
+		model_version = model_info.latestActiveVersion
 
-		job = client.jobs.submit_files(model_id, model_version, {input_name: filePath})
-		result = client.results.block_until_complete(job, timeout= None)	  
+		job = client.jobs.submit_file(model_id, model_version, {input_name: filePath})
+		result = client.results.block_until_complete(job, timeout=None)	  
 	
 		result['model_info'] = model_info
 		result['model_version'] = model_version
@@ -170,7 +170,7 @@ class VehicleDetectionAlgorithm(QgsProcessingAlgorithm):
 		"""
 		Returns the algorithm name, used for identifying the algorithm.
 		"""
-		return 'Vehicle Detection'
+		return 'Building Detection'
 
 	def displayName(self):
 		"""
@@ -195,7 +195,7 @@ class VehicleDetectionAlgorithm(QgsProcessingAlgorithm):
 		return QCoreApplication.translate('Processing', string)
 
 	def createInstance(self):
-		return VehicleDetectionAlgorithm()
+		return BuildingDetectionAlgorithm()
 
 
 	def plot_objects(self, result, source):
@@ -219,7 +219,7 @@ class VehicleDetectionAlgorithm(QgsProcessingAlgorithm):
 		tgt.ImportFromEPSG(src_spatial_reference)
 		transform = osr.CoordinateTransformation(src, tgt)
 
-		object_layer = QgsVectorLayer('Polygon?crs=EPSG:'+str(src_spatial_reference), img_name + ' Vehicles', "memory")
+		object_layer = QgsVectorLayer('Polygon?crs=EPSG:'+str(src_spatial_reference), img_name + ' Buildings', "memory")
 		object_layer.setOpacity(0.65)
 		object_symbol = QgsFillSymbol.createSimple({'color':'140,206,205',
 				'color_border':'30,47,63', 
@@ -234,11 +234,11 @@ class VehicleDetectionAlgorithm(QgsProcessingAlgorithm):
 	
 		output = result.get_first_outputs()["results.json"]
 	
-		for gobject in output['vehicle']:
-			lat_1 = geoData[3] + gobject['boundingBox']['ymin'] * geoData[5]
-			lon_1 = geoData[0] + gobject['boundingBox']['xmin'] * geoData[1]
-			lat_2 = geoData[3] + gobject['boundingBox']['ymax'] * geoData[5]
-			lon_2 = geoData[0] + gobject['boundingBox']['xmax'] * geoData[1]
+		for building in output['building']:
+			lat_1 = geoData[3] + building['boundingBox']['y'] * geoData[5]
+			lon_1 = geoData[0] + building['boundingBox']['x'] * geoData[1]
+			lat_2 = geoData[3] + (building['boundingBox']['height']+building['boundingBox']['y']) * geoData[5]
+			lon_2 = geoData[0] + (building['boundingBox']['width']+building['boundingBox']['x']) * geoData[1]
 
 			raw_points = [(lon_1,lat_1),(lon_1,lat_2),(lon_2,lat_2),(lon_2,lat_1)]
 		
@@ -249,10 +249,10 @@ class VehicleDetectionAlgorithm(QgsProcessingAlgorithm):
 			object_feat = QgsFeature(object_layer.fields())
 			bounding_box = QgsGeometry.fromPolygonXY([[QgsPointXY(point[0], point[1]) for point in raw_points]])
 			object_feat.setGeometry(bounding_box)
-			object_feat['score'] = gobject['score']
+			object_feat['score'] = building['score']
 			object_dp.addFeatures([object_feat])
 		
 		object_layer.updateExtents()
 		QgsProject.instance().addMapLayers([object_layer])
 		
-		return(len(output['vehicle']))
+		return(len(output['building']))
