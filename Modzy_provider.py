@@ -18,7 +18,6 @@ __revision__ = '$Format:%H$'
 from qgis.core import QgsProcessingProvider
 from .VehicleDetection_algorithm import VehicleDetectionAlgorithm
 from .GeneralObjectDetection_algorithm import GeneralObjectDetectionAlgorithm
-from .BuildingSegmentation_algorithm import BuildingSegmentationAlgorithm
 
 # Add additional models here and make sure to load in loadAlgorithms()
 
@@ -70,7 +69,6 @@ class ModzyProvider(QgsProcessingProvider):
 		"""
 		self.addAlgorithm(VehicleDetectionAlgorithm())
 		self.addAlgorithm(GeneralObjectDetectionAlgorithm())
-		self.addAlgorithm(BuildingSegmentationAlgorithm())
 
 		# add additional algorithms here
 		# self.addAlgorithm(MyOtherAlgorithm())
