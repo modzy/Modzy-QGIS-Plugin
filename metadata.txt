@@ -1,13 +1,21 @@
 [general]
 name=Modzy
 qgisMinimumVersion=3.8
-description=Access to Modzy's ML, DL and AI models
+description=
+  This plugin provides seamless access to Modzy's ML, DL and AI models.
+  Please be sure to install the Modzy SDK to QGIS:
+  - Mac OS X: In a terminal, execute: /Applications/QGIS.app/Contents/MacOS/bin/python3 -m pip install modzy-sdk
+  - Windows: In a terminal, execute: C:\OSGeo4W\apps\Python39>pip install modzy-sdk
+  To see more documentation, please view this page on Modzy's official documentation site.
 version=0.2
 author=Modzy
 email=support@modzy.com
-
-about=Modzy hosts a marketplace of ML, AI algorithms for use.
-
+about= 
+  Modzy hosts a public marketplace of ML, AI algorithms for use as well as a private library for subscribers. This plugin provides seamless access to Modzy's ML, DL and AI models. 
+  Please be sure to install the Modzy SDK to QGIS:
+  - Mac OS X: In a terminal, execute: /Applications/QGIS.app/Contents/MacOS/bin/python3 -m pip install modzy-sdk
+  - Windows: In a terminal, execute: C:\OSGeo4W\apps\Python39>pip install modzy-sdk+
+  To see more documentation, please view this page on Modzy's official documentation site.
 tracker=https://github.com/modzy/Modzy-QGIS-Plugin/issues
 repository=https://github.com/modzy/Modzy-QGIS-Plugin/
 
